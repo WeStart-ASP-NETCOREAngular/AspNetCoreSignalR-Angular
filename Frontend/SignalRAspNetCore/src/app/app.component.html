@@ -1,0 +1,20 @@
+<h1>SignalR Hello World</h1>
+<div>
+  <form [formGroup]="chatForm" (ngSubmit)="onSubmit()">
+    <input formControlName="message" type="text" />
+    <select formControlName="group">
+      <option value="Everyone">Everyone</option>
+      <option *ngFor="let user of users">
+        {{ user }}
+      </option>
+    </select>
+    <button type="submit">Send Message</button>
+  </form>
+</div>
+<div>
+  <ul>
+    <li *ngFor="let message of messages">
+      {{ message }}
+    </li>
+  </ul>
+</div>

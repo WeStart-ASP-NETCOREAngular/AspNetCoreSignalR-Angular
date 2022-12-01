@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 
 namespace SignalRAngularTest.Hubs
 {
@@ -18,6 +19,21 @@ namespace SignalRAngularTest.Hubs
         public Task SendMessageToUser(string connectionId, string message)
         {
             return Clients.Client(connectionId).SendAsync("ReceiveMessage", message);
+        }
+
+        public Task SendMessageToCaller(string message)
+        {
+            return Clients.Caller.SendAsync("ReceiveMessage", message);
+        }
+
+        public Task JoinGroup(string groupName)
+        {
+            return Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+        }
+
+        public Task SendMessageToGroup(string groupName, string message)
+        {
+            return Clients.Group(groupName).SendAsync("ReceiveMessage", message);
         }
 
 

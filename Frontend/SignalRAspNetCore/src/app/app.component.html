@@ -1,9 +1,12 @@
 <h1>SignalR Hello World</h1>
 <div>
+  <button (click)="onJoinGroup()">Join Group</button>
   <form [formGroup]="chatForm" (ngSubmit)="onSubmit()">
     <input formControlName="message" type="text" />
     <select formControlName="group">
       <option value="Everyone">Everyone</option>
+      <option value="Myself">Myself</option>
+      <option value="PrivateGroup">Private Group</option>
       <option *ngFor="let user of users">
         {{ user }}
       </option>

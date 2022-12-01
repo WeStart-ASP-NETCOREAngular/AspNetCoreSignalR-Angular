@@ -44,12 +44,21 @@ export class AppComponent implements OnInit {
       });
   }
 
+  onJoinGroup() {
+    this.hubConnection.invoke('JoinGroup', 'PrivateGroup');
+  }
+
   onSubmit() {
     const { message, group } = this.chatForm.value;
-    if (group == 'Everyone') {
-      this.hubConnection.invoke('SendMessageToAll', message);
-    } else {
+    if (group == 'Everyone' || group == 'Myself') {
+      let method =
+        group == 'Everyone' ? 'SendMessageToAll' : 'SendMessageToCaller';
+      this.hubConnection.invoke(method, message);
+    } else if (group != 'PrivateGroup') {
       this.hubConnection.invoke('SendMessageToUser', group, message);
+    } else {
+      console.log('Sending message to Group..');
+      this.hubConnection.invoke('SendMessageToGroup', 'PrivateGroup', message);
     }
 
     console.log(message);
